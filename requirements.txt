@@ -1,1 +1,5 @@
 boto3==1.9.140
+quickfix==1.15.1
+fxcmpy
+v20
+oandapyV20

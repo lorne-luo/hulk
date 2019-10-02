@@ -29,6 +29,11 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+.idea/
+log/
+logs/
+env/
+
 local.py
 env/
 venv/
