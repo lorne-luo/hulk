@@ -1,6 +1,6 @@
 import logging
 
-from broker.base import InstrumentBase
+from ...base.models import InstrumentBase
 
 logger = logging.getLogger(__name__)
 

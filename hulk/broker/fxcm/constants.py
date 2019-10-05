@@ -1,8 +1,8 @@
 from fxcmpy import fxcmpy
 
-from mt4.constants import PERIOD_H1, PERIOD_M1, PERIOD_M5, PERIOD_M15, PERIOD_M30, PERIOD_D1, PERIOD_H4, PERIOD_W1, \
-    PERIOD_MN1
-from utils.singleton import SingletonDecorator
+from hulk.singleton import SingletonDecorator
+from ...base.common import (PERIOD_H1, PERIOD_M1, PERIOD_M5, PERIOD_M15, PERIOD_M30, PERIOD_D1, PERIOD_H4, PERIOD_W1,
+                            PERIOD_MN1)
 
 
 class FXCMAccountType(object):

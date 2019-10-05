@@ -1,16 +1,15 @@
 import logging
 
 import settings
-from broker.base import TradeBase
-from broker.fxcm.constants import get_fxcm_symbol
-from broker.oanda.base import OANDABase
-from broker.oanda.common.convertor import lots_to_units
-from mt4.constants import OrderSide
+
+from .constants import get_fxcm_symbol
+from ...base.common import lots_to_units, OrderSide
+from ...base.models import TradeBase
 
 logger = logging.getLogger(__name__)
 
 
-class TradeMixin(OANDABase, TradeBase):
+class TradeMixin(TradeBase):
 
     def list_trade(self, ids=None, state=None, instrument=None, count=20, beforeID=None):
         return self.fxcmpy.get_all_trade_ids()

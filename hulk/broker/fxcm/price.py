@@ -1,19 +1,18 @@
-import json
 import logging
 from decimal import Decimal
+
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 
-from broker.base import PriceBase
-from broker.fxcm.constants import get_fxcm_symbol, get_fxcm_timeframe
-from broker.oanda.base import OANDABase
-from mt4.constants import get_mt4_symbol, pip, get_candle_time
-from utils.redis import price_redis, get_tick_price
+from .constants import get_fxcm_symbol, get_fxcm_timeframe
+from ...base.common import get_mt4_symbol, pip, get_candle_time
+from ...base.models import PriceBase
+from ...utils.redis import get_tick_price
 
 logger = logging.getLogger(__name__)
 
 
-class PriceMixin(OANDABase, PriceBase):
+class PriceMixin(PriceBase):
     _prices = {}
 
     # list

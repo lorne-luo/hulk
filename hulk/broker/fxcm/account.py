@@ -10,16 +10,16 @@ from .position import PositionMixin
 from .price import PriceMixin
 from .trade import TradeMixin
 from ...base.common import units_to_lots, pip
-from ...base.models import BrokerAccount, AccountType
+from ...base.models import AccountBase, AccountType
 from ...utils.string import format_dict
 
 logger = logging.getLogger(__name__)
 
 
-class FXCM(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, BrokerAccount):
+class FXCM(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, AccountBase):
     broker = 'FXCM'
     max_prices = 2000
-    pairs = BrokerAccount.default_pairs
+    pairs = AccountBase.default_pairs
     MAX_CANDLES = 10000
 
     def __init__(self, type, account_id, access_token, *args, **kwargs):

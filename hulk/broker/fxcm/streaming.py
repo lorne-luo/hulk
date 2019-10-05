@@ -4,21 +4,17 @@ import time
 from datetime import datetime
 from decimal import Decimal
 
-from fxcmpy import fxcmpy, fxcmpy_closed_position
-from fxcmpy.fxcmpy import ServerError
-
 import settings
-from broker import SingletonFXCM
-from broker.base import AccountType
-from broker.fxcm.constants import get_fxcm_symbol
-from event.event import TickPriceEvent, TimeFrameEvent, HeartBeatEvent, StartUpEvent, ConnectEvent, TradeCloseEvent, \
+from event.event import TickPriceEvent, HeartBeatEvent, StartUpEvent, ConnectEvent, TradeCloseEvent, \
     MarketEvent, MarketAction
 from event.runner import StreamRunnerBase
-from mt4.constants import get_mt4_symbol, OrderSide, pip
+from fxcmpy import fxcmpy, fxcmpy_closed_position
+from fxcmpy.fxcmpy import ServerError
 from utils import telegram as tg
-from utils.market import is_market_open
-from utils.redis import RedisQueue, set_tick_price
-from utils.redis import set_last_tick
+
+from .constants import get_fxcm_symbol
+from ...base.common import AccountType, is_market_open, get_mt4_symbol, OrderSide, pip
+from ...utils.redis import set_last_tick, set_tick_price
 
 logger = logging.getLogger(__name__)
 
@@ -298,16 +294,15 @@ class FXCMStreamRunner(StreamRunnerBase):
             logger.error('[ERROR_COUNTER] =%s, renew connect' % self.error_counter)
             self.new_connect()
 
-
-if __name__ == '__main__':
-    from event.handler import DebugHandler, TimeFrameTicker
-
-    # from broker.fxcm.streaming import *
-    queue = RedisQueue('Pricing')
-    debug = DebugHandler(queue, events=[TimeFrameEvent.type])
-    tft = TimeFrameTicker(queue, timezone=0)
-    pairs = ['EUR/USD']
-    fxcm = SingletonFXCM(AccountType.DEMO, settings.FXCM_ACCOUNT_ID, settings.FXCM_ACCESS_TOKEN)
-
-    r = FXCMStreamRunner(queue, pairs=pairs, handlers=[debug, tft], api=fxcm.fxcmpy)
-    r.run()
+# if __name__ == '__main__':
+#     from event.handler import DebugHandler, TimeFrameTicker
+#
+#     # from broker.fxcm.streaming import *
+#     queue = RedisQueue('Pricing')
+#     debug = DebugHandler(queue, events=[TimeFrameEvent.type])
+#     tft = TimeFrameTicker(queue, timezone=0)
+#     pairs = ['EUR/USD']
+#     fxcm = SingletonFXCM(AccountType.DEMO, settings.FXCM_ACCOUNT_ID, settings.FXCM_ACCESS_TOKEN)
+#
+#     r = FXCMStreamRunner(queue, pairs=pairs, handlers=[debug, tft], api=fxcm.fxcmpy)
+#     r.run()

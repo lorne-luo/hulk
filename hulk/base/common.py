@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 
 from dateutil.relativedelta import relativedelta, MO
@@ -15,6 +16,12 @@ PERIOD_D1 = 1440
 PERIOD_W1 = 10080
 PERIOD_MN1 = 43200
 PERIOD_CHOICES = [PERIOD_M1, PERIOD_M5, PERIOD_M15, PERIOD_M30, PERIOD_H1, PERIOD_H4, PERIOD_D1, PERIOD_W1, PERIOD_MN1]
+
+
+class AccountType(object):
+    REAL = 'REAL'
+    DEMO = 'DEMO'
+    SANDBOX = 'SANDBOX'
 
 
 class OrderSide(object):
@@ -258,3 +265,27 @@ def lots_to_units(lot, side=OrderSide.BUY):
     elif side == OrderSide.SELL:
         return lot * UNIT_RATIO * -1
     raise Exception('Unknow direction.')
+
+
+def is_market_open():
+    now = datetime.utcnow()
+
+    close_hour = 19
+    open_hour = 22
+
+    HOLIDAY = [(1, 1)]
+    if now.weekday() == 5:
+        return False
+    if now.weekday() == 4:
+        return now.hour < close_hour
+    if now.weekday() == 6:
+        return now.hour > open_hour
+
+    for date in HOLIDAY:
+        next_day = now + relativedelta(hours=24)
+        if (next_day.day, next_day.month) == date:
+            return next_day.hour < close_hour
+
+        if (now.day, now.month) == date:
+            return now.hour > open_hour
+    return True

@@ -1,7 +1,7 @@
 import logging
 
-from broker.base import PositionBase
-from broker.fxcm.constants import get_fxcm_symbol
+from ...base.models import PositionBase
+from .constants import get_fxcm_symbol
 
 logger = logging.getLogger(__name__)
 

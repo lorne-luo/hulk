@@ -11,6 +11,8 @@ Click==7.0
 pytest==4.6.5
 pytest-runner==5.1
 
+dateparser==0.7.2
+redis==3.3.8
 boto3==1.9.140
 quickfix==1.15.1
 fxcmpy

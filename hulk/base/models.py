@@ -1,19 +1,24 @@
-from .constants import OrderSide
+from .common import OrderSide, AccountType
 
 
-class AccountType(object):
-    REAL = 'REAL'
-    DEMO = 'DEMO'
-    SANDBOX = 'SANDBOX'
-
-
-class BrokerAccount(object):
+class AccountBase(object):
     broker = ''
     type = AccountType.DEMO
     name = ''
     account_id = ''
     access_token = ''
     default_pairs = ['EURUSD', 'GBPUSD', 'USDJPY', 'USDCHF', 'AUDUSD', 'NZDUSD', 'USDCNH', 'XAUUSD']
+
+    api = None
+    stream_api = None
+
+    _instruments = {}
+    order_states = {}
+    positions = {}
+    transactions = []
+    trades = {}
+    orders = {}
+    details = None
 
     @property
     def id(self):
