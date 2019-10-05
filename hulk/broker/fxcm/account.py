@@ -10,7 +10,8 @@ from .position import PositionMixin
 from .price import PriceMixin
 from .trade import TradeMixin
 from ...base.common import units_to_lots, pip
-from ...base.models import AccountBase, AccountType
+from ...base.models import AccountBase
+from ...base.constants import AccountType
 from ...utils.string import format_dict
 
 logger = logging.getLogger(__name__)

@@ -13,7 +13,8 @@ from fxcmpy.fxcmpy import ServerError
 from utils import telegram as tg
 
 from .constants import get_fxcm_symbol
-from ...base.common import AccountType, is_market_open, get_mt4_symbol, OrderSide, pip
+from ...base.constants import AccountType
+from ...base.common import is_market_open, get_mt4_symbol, OrderSide, pip
 from ...utils.redis import set_last_tick, set_tick_price
 
 logger = logging.getLogger(__name__)

@@ -1,7 +1,5 @@
 import logging
 
-import settings
-
 from .constants import get_fxcm_symbol
 from ...base.common import lots_to_units, OrderSide
 from ...base.models import TradeBase
@@ -70,7 +68,4 @@ class TradeMixin(TradeBase):
     def log_trade(self):
         logger.info('[LOG_TRADE]')
         for id, trade in self.fxcmpy.open_pos.items():
-            if settings.DEBUG:
-                print(str(trade))
-            else:
-                logger.info(str(trade))
+            logger.info(str(trade))

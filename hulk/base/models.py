@@ -1,4 +1,4 @@
-from .common import OrderSide, AccountType
+from .constants import OrderSide, AccountType
 
 
 class AccountBase(object):
