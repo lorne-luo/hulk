@@ -2,6 +2,8 @@ from decimal import Decimal
 
 from dateutil.relativedelta import relativedelta, MO
 
+UNIT_RATIO = 100000
+
 PERIOD_TICK = 0
 PERIOD_M1 = 1
 PERIOD_M5 = 5
@@ -179,6 +181,7 @@ def get_mt4_symbol(symbol):
     symbol = str(symbol)
     return symbol.replace(' ', '').replace('_', '').replace('-', '').replace('/', '')
 
+
 def pip(symbol, price=None, _abs=False):
     symbol = get_mt4_symbol(symbol)
     if symbol not in PIP_DICT:
@@ -237,3 +240,21 @@ def get_candle_time(time, timeframe):
         return t.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
     raise NotImplementedError
+
+
+def units_to_lots(units):
+    units = Decimal(str(units))
+    return units / UNIT_RATIO
+
+
+def lots_to_units(lot, side=OrderSide.BUY):
+    try:
+        lot = Decimal(str(lot)).quantize(Decimal('0.01'))
+    except:
+        return None
+
+    if side == OrderSide.BUY:
+        return lot * UNIT_RATIO
+    elif side == OrderSide.SELL:
+        return lot * UNIT_RATIO * -1
+    raise Exception('Unknow direction.')

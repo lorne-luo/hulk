@@ -1,7 +1,7 @@
 import unittest
 
 import settings
-from broker import SingletonFXCM
+from hulk.broker import SingletonFXCM
 from broker.base import AccountType
 from mt4.constants import OrderSide
 

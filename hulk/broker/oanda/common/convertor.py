@@ -1,8 +1,5 @@
-from decimal import Decimal
-
-from mt4.constants import OrderSide, PERIOD_M1, PERIOD_M5, PERIOD_M15, PERIOD_M30, PERIOD_H1, PERIOD_H4, PERIOD_D1, \
-    PERIOD_W1, PERIOD_MN1
-from broker.oanda.common.constants import UNIT_RATIO
+from ....base.common import (PERIOD_M1, PERIOD_M5, PERIOD_M15, PERIOD_M30, PERIOD_H1, PERIOD_H4, PERIOD_D1,
+                             PERIOD_W1, PERIOD_MN1)
 
 
 def get_symbol(symbol):
@@ -12,24 +9,6 @@ def get_symbol(symbol):
     if '_' not in symbol:
         return symbol[:-3] + '_' + symbol[-3:]
     return symbol.upper()
-
-
-def lots_to_units(lot, side=OrderSide.BUY):
-    try:
-        lot = Decimal(str(lot)).quantize(Decimal('0.01'))
-    except:
-        return None
-
-    if side == OrderSide.BUY:
-        return lot * UNIT_RATIO
-    elif side == OrderSide.SELL:
-        return lot * UNIT_RATIO * -1
-    raise Exception('Unknow direction.')
-
-
-def units_to_lots(units):
-    units = Decimal(str(units))
-    return units / UNIT_RATIO
 
 
 def get_timeframe_granularity(timeframe):

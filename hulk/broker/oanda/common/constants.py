@@ -1,6 +1,4 @@
-from broker.base import AccountType
-
-UNIT_RATIO = 100000
+from ....base.models import AccountType
 
 
 class OrderType(object):
@@ -127,11 +125,9 @@ OANDA_ENVIRONMENTS = {
     "streaming": {
         AccountType.REAL: "stream-fxtrade.oanda.com",
         AccountType.DEMO: "stream-fxpractice.oanda.com",
-        AccountType.SANDBOX: "stream-sandbox.oanda.com"
     },
     "api": {
         AccountType.REAL: "api-fxtrade.oanda.com",
         AccountType.DEMO: "api-fxpractice.oanda.com",
-        AccountType.SANDBOX: "api-sandbox.oanda.com"
     }
 }

@@ -1,21 +1,17 @@
-import json
 import logging
 from decimal import Decimal
 
 from fxcmpy import fxcmpy
 
-import settings
-from broker.base import BrokerAccount, AccountType
-from broker.fxcm.constants import get_fxcm_symbol
-from broker.fxcm.instrument import InstrumentMixin
-from broker.fxcm.order import OrderMixin
-from broker.fxcm.position import PositionMixin
-from broker.fxcm.price import PriceMixin
-from broker.fxcm.trade import TradeMixin
-from broker.oanda.common.convertor import units_to_lots
-from mt4.constants import pip, get_mt4_symbol
-from utils.redis import price_redis
-from utils.string import format_dict
+from .constants import get_fxcm_symbol
+from .instrument import InstrumentMixin
+from .order import OrderMixin
+from .position import PositionMixin
+from .price import PriceMixin
+from .trade import TradeMixin
+from ...base.common import units_to_lots, pip
+from ...base.models import BrokerAccount, AccountType
+from ...utils.string import format_dict
 
 logger = logging.getLogger(__name__)
 
@@ -101,12 +97,8 @@ class FXCM(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, B
         logger.info('[LOG_ACCOUNT]')
         content = format_dict(self.summary)
 
-        if settings.DEBUG:
-            print(content)
-        else:
-            logger.info(content)
+        logger.info(content)
 
-
-if __name__ == '__main__':
-    #    from broker.fxcm.account import *
-    fxcm = FXCM(AccountType.DEMO, settings.FXCM_ACCOUNT_ID, settings.FXCM_ACCESS_TOKEN)
+# if __name__ == '__main__':
+#    from broker.fxcm.account import *
+# fxcm = FXCM(AccountType.DEMO, settings.FXCM_ACCOUNT_ID, settings.FXCM_ACCESS_TOKEN)
