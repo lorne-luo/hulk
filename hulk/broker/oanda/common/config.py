@@ -4,7 +4,7 @@ import os
 import sys
 import v20
 
-from broker.oanda.common import input
+from . import input
 
 
 #
@@ -48,7 +48,7 @@ class ConfigValueError(Exception):
 class Config(object):
     """
     The Config object encapsulates all of the configuration required to create
-    a v20 API context and configure it to work with a specific Account. 
+    a v20 API context and configure it to work with a specific Account.
 
     Using the Config object enables the scripts to exist without many command
     line arguments (host, token, accountID, etc)
@@ -70,7 +70,7 @@ class Config(object):
 
     def __str__(self):
         """
-        Create the string (YAML) representaion of the Config instance 
+        Create the string (YAML) representaion of the Config instance
         """
 
         s = ""
@@ -190,7 +190,7 @@ class Config(object):
         )
 
         index = environments.index(environment)
-        
+
         self.hostname = hostnames[index]
         self.streaming_hostname = streaming_hostnames[index]
 
@@ -307,7 +307,7 @@ class Config(object):
 
 def make_config_instance(path):
     """
-    Create a Config instance, load its state from the provided path and 
+    Create a Config instance, load its state from the provided path and
     ensure that it is valid.
 
     Args:
@@ -325,7 +325,7 @@ def make_config_instance(path):
 
 def default_config_path():
     """
-    Calculate the default configuration file path. 
+    Calculate the default configuration file path.
 
     The default is first selected to be the contents of the V20_CONF
     environment variable, followed by the default path ~/.v20.conf

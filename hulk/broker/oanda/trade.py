@@ -3,7 +3,7 @@ import logging
 import settings
 
 from .base import api
-from .common.constants import TransactionName
+from ...base.constants import TransactionName
 from .common.logger import log_error
 from .common.prints import print_trades
 from .common.view import print_entity

@@ -1,4 +1,4 @@
-import broker.oanda.common.view as common_view
+from . import view as common_view
 
 
 # === POSITION ===

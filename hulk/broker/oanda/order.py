@@ -6,7 +6,7 @@ from v20.transaction import (StopLossDetails, ClientExtensions, TakeProfitDetail
                              LimitOrderTransaction, StopOrderTransaction)
 
 from .base import api
-from .common.constants import (TransactionName, OrderType, OrderPositionFill, TimeInForce,
+from ...base.constants import (TransactionName, OrderType, OrderPositionFill, TimeInForce,
                                OrderTriggerCondition, OrderState)
 from .common.convertor import get_symbol
 from .common.logger import log_error

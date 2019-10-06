@@ -1,15 +1,11 @@
 import logging
-import dateparser
-import pandas as pd
-from decimal import Decimal, ROUND_HALF_UP
 
 from ...base.models import InstrumentBase
-
 
 logger = logging.getLogger(__name__)
 
 
-class InstrumentMixin( InstrumentBase):
+class InstrumentMixin(InstrumentBase):
     @property
     def instruments(self):
         if self._instruments:

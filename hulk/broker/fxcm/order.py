@@ -1,7 +1,7 @@
 import logging
 
 from .constants import get_fxcm_symbol
-from ..oanda.common.constants import TimeInForce, OrderPositionFill, OrderTriggerCondition
+from ...base.constants import TimeInForce, OrderPositionFill, OrderTriggerCondition
 from ...base.common import lots_to_units, OrderSide
 from ...base.models import OrderBase
 from ...utils.string import format_dict
