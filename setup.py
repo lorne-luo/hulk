@@ -1,55 +1,40 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-"""The setup script."""
-
 from setuptools import setup, find_packages
+from codecs import open
+from os import path
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+__version__ = '0.0.1'
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
+here = path.abspath(path.dirname(__file__))
 
-requirements = ['Click>=7.0', ]
+# Get the long description from the README file
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
-setup_requirements = ['pytest-runner', ]
+# get the dependencies and installs
+with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
+    all_reqs = f.read().split('\n')
 
-test_requirements = ['pytest>=3', ]
+install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
+dependency_links = [x.strip().replace('git+', '') for x in all_reqs if x.startswith('git+')]
 
 setup(
-    author="Lorne Luo",
-    author_email='dev@luotao.net',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
-    classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-    ],
-    description="Rest API and FIX protocal integrator for Forex brokers",
-    entry_points={
-        'console_scripts': [
-            'hulk=hulk.cli:main',
-        ],
-    },
-    install_requires=requirements,
-    license="MIT license",
-    long_description=readme + '\n\n' + history,
-    include_package_data=True,
-    keywords='hulk',
     name='hulk',
-    packages=find_packages(include=['hulk', 'hulk.*']),
-    setup_requires=setup_requirements,
-    test_suite='tests',
-    tests_require=test_requirements,
+    version=__version__,
+    description='Rest API and FIX protocal integrator for Forex brokers',
+    long_description=long_description,
     url='https://github.com/lorne-luo/hulk',
-    version='0.0.1',
-    zip_safe=False,
+    download_url='https://github.com/lorne-luo/hulk/tarball/' + __version__,
+    license='BSD',
+    classifiers=[
+      'Development Status :: 3 - Alpha',
+      'Intended Audience :: Developers',
+      'Programming Language :: Python :: 3',
+    ],
+    keywords='',
+    packages=find_packages(exclude=['docs', 'tests*']),
+    include_package_data=True,
+    author='Lorne Luo',
+    install_requires=install_requires,
+    dependency_links=dependency_links,
+    author_email='dev@luotao.net'
 )
