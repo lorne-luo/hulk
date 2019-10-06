@@ -188,18 +188,6 @@ class OrderBase(object):
                      **kwargs):
         raise NotImplementedError
 
-    def market_if_touched(self, instrument, side, price, lots,
-                          priceBound, timeInForce,
-                          gtd_time, positionFill,
-                          trigger_condition,
-                          take_profit=None,
-                          stop_loss=None,
-                          trailing_pip=None,
-                          order_id=None,  # order to replace
-                          client_id=None, client_tag=None, client_comment=None,
-                          trade_client_id=None, trade_client_tag=None, trade_client_comment=None,
-                          **kwargs):
-        raise NotImplementedError
 
     def take_profit(self, trade_id, price, order_id, client_trade_id,
                     timeInForce, gtd_time,
