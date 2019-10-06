@@ -1,24 +1,25 @@
 import logging
 from decimal import Decimal
 
-from v20.transaction import StopLossDetails, ClientExtensions, TakeProfitDetails, TrailingStopLossDetails, \
-    LimitOrderTransaction, StopOrderTransaction
-
 import settings
-from broker.base import OrderBase
-from broker.oanda.base import api, OANDABase
-from broker.oanda.common.constants import TransactionName, OrderType, OrderPositionFill, TimeInForce, \
-    OrderTriggerCondition, OrderState
-from broker.oanda.common.convertor import get_symbol, lots_to_units
-from broker.oanda.common.logger import log_error
-from broker.oanda.common.prints import print_orders
-from broker.oanda.common.view import print_entity
-from mt4.constants import OrderSide, pip
+from v20.transaction import (StopLossDetails, ClientExtensions, TakeProfitDetails, TrailingStopLossDetails,
+                             LimitOrderTransaction, StopOrderTransaction)
+
+from .base import api
+from .common.constants import (TransactionName, OrderType, OrderPositionFill, TimeInForce,
+                               OrderTriggerCondition, OrderState)
+from .common.convertor import get_symbol
+from .common.logger import log_error
+from .common.prints import print_orders
+from .common.view import print_entity
+from ...base.common import pip, lots_to_units
+from ...base.constants import OrderSide
+from ...base.models import OrderBase
 
 logger = logging.getLogger(__name__)
 
 
-class OrderMixin(OANDABase, OrderBase):
+class OrderMixin(OrderBase):
 
     # order list
     def _process_orders(self, response):

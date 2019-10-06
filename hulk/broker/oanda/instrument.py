@@ -3,15 +3,13 @@ import dateparser
 import pandas as pd
 from decimal import Decimal, ROUND_HALF_UP
 
-from broker.base import InstrumentBase
-from mt4.constants import OrderSide, pip
-from broker.oanda.base import api, OANDABase
-from broker.oanda.common.convertor import get_symbol, get_timeframe_granularity
+from ...base.models import InstrumentBase
+
 
 logger = logging.getLogger(__name__)
 
 
-class InstrumentMixin(OANDABase, InstrumentBase):
+class InstrumentMixin( InstrumentBase):
     @property
     def instruments(self):
         if self._instruments:

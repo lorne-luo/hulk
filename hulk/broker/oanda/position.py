@@ -1,14 +1,13 @@
 import logging
 
-from broker.base import PositionBase
-from broker.oanda.base import OANDABase
-from broker.oanda.common.convertor import get_symbol
-from broker.oanda.common.logger import log_error
+from ...base.models import PositionBase
+from .common.convertor import get_symbol
+from .common.logger import log_error
 
 logger = logging.getLogger(__name__)
 
 
-class PositionMixin(OANDABase, PositionBase):
+class PositionMixin( PositionBase):
 
     def pull_position(self, instrument):
         """pull position by instrument"""

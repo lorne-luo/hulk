@@ -1,13 +1,17 @@
 import logging
-from queue import Empty, Queue
-import dateparser
+from queue import Queue
 
-from broker.base import AccountType
-from broker import SingletonOANDA
+import dateparser
 from event.runner import StreamRunnerBase
-from broker.oanda.common.convertor import get_symbol
+
+from .account import OANDA
+from .common.convertor import get_symbol
+from ...base.constants import AccountType
+from ...utils.singleton import SingletonDecorator
 
 logger = logging.getLogger(__name__)
+
+SingletonOANDA = SingletonDecorator(OANDA)
 
 
 class OandaV20StreamRunner(StreamRunnerBase):

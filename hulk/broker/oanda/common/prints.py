@@ -33,7 +33,7 @@ def print_positions_map(positions_map, open_only=True):
     Print a map of Positions in table format.
 
     Args:
-        positions: The map of instrument->Positions to print
+        positions_map: The map of instrument->Positions to print
         open_only: Flag that controls if only open Positions are displayed
     """
 
@@ -85,7 +85,7 @@ def print_positions(positions, open_only=True):
     print("")
 
 
-# === ORDER === 
+# === ORDER ===
 
 def print_orders_map(orders_map):
     """
@@ -234,7 +234,7 @@ def print_trades_map(trades_map):
     Print a map of Trade Summaries in table format.
 
     Args:
-        orders_map: The map of id->Trade to print
+        trades_map: The map of id->Trade to print
     """
 
     print_trades(

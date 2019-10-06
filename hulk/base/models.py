@@ -2,23 +2,6 @@ from .constants import OrderSide, AccountType
 
 
 class AccountBase(object):
-    broker = ''
-    type = AccountType.DEMO
-    name = ''
-    account_id = ''
-    access_token = ''
-    default_pairs = ['EURUSD', 'GBPUSD', 'USDJPY', 'USDCHF', 'AUDUSD', 'NZDUSD', 'USDCNH', 'XAUUSD']
-
-    api = None
-    stream_api = None
-
-    _instruments = {}
-    order_states = {}
-    positions = {}
-    transactions = []
-    trades = {}
-    orders = {}
-    details = None
 
     @property
     def id(self):
@@ -27,6 +10,23 @@ class AccountBase(object):
     def __init__(self, *args, **kwargs):
         self.broker = self.broker or self.__class__.__name__
         self.name = self.id
+        self.broker = ''
+        self.type = AccountType.DEMO
+        self.name = ''
+        self.account_id = ''
+        self.access_token = ''
+        self.default_pairs = ['EURUSD', 'GBPUSD', 'USDJPY', 'USDCHF', 'AUDUSD', 'NZDUSD', 'USDCNH', 'XAUUSD']
+
+        self.api = None
+        self.stream_api = None
+
+        self._instruments = {}
+        self.order_states = {}
+        self.positions = {}
+        self.transactions = []
+        self.trades = {}
+        self.orders = {}
+        self.details = None
 
 
 class PositionBase(object):
@@ -187,7 +187,6 @@ class OrderBase(object):
                      trade_client_id=None, trade_client_tag=None, trade_client_comment=None,
                      **kwargs):
         raise NotImplementedError
-
 
     def take_profit(self, trade_id, price, order_id, client_trade_id,
                     timeInForce, gtd_time,

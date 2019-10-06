@@ -1,20 +1,19 @@
 import logging
-from decimal import Decimal, ROUND_HALF_UP
-import pandas as pd
+from decimal import Decimal
 
 import dateparser
-
-from broker.base import PriceBase
-from broker.oanda.base import OANDABase
-from mt4.constants import pip
-from broker.oanda.common.view import price_to_string, heartbeat_to_string
-from broker.oanda.common.convertor import get_symbol, lots_to_units, get_timeframe_granularity
+import pandas as pd
 import settings
+
+from .common.convertor import get_symbol, get_timeframe_granularity
+from .common.view import price_to_string, heartbeat_to_string
+from ...base.common import pip
+from ...base.models import PriceBase
 
 logger = logging.getLogger(__name__)
 
 
-class PriceMixin(OANDABase, PriceBase):
+class PriceMixin(PriceBase):
     _prices = {}
 
     def _process_price(self, price):

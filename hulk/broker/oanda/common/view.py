@@ -35,6 +35,7 @@ def print_entity(entity, title=None, headers=True):
     Args:
         title: The title to print
         entity: The entity to print
+        :param headers: 
     """
 
     if title is not None and len(title) > 0:
@@ -109,7 +110,7 @@ def print_response_entity(
 ):
     """
     Print a Transaction from a response object if the Transaction exists and
-    the response has the expected HTTP status code. 
+    the response has the expected HTTP status code.
 
     If the Transaction doesn't exist in the response, this function silently
     fails and nothing is printed.

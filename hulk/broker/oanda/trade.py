@@ -1,19 +1,20 @@
 import logging
 
 import settings
-from broker.base import TradeBase
-from broker.oanda.base import api, OANDABase
-from broker.oanda.common.constants import TransactionName
-from broker.oanda.common.convertor import lots_to_units
-from broker.oanda.common.logger import log_error
-from broker.oanda.common.prints import print_trades
-from broker.oanda.common.view import print_entity
-from mt4.constants import OrderSide
+
+from .base import api
+from .common.constants import TransactionName
+from .common.logger import log_error
+from .common.prints import print_trades
+from .common.view import print_entity
+from ...base.common import lots_to_units
+from ...base.constants import OrderSide
+from ...base.models import TradeBase
 
 logger = logging.getLogger(__name__)
 
 
-class TradeMixin(OANDABase, TradeBase):
+class TradeMixin(TradeBase):
 
     # list
     def _process_trades(self, response):

@@ -1,7 +1,8 @@
-import v20
 import settings
-from broker.oanda.common.constants import OANDA_ENVIRONMENTS
-from utils.singleton import SingletonDecorator
+import v20
+
+from .common.constants import OANDA_ENVIRONMENTS
+from ...utils.singleton import SingletonDecorator
 
 OANDA_API_DOMAIN = OANDA_ENVIRONMENTS["api"][settings.OANDA_DOMAIN]
 OANDA_STREAM_DOMAIN = OANDA_ENVIRONMENTS["streaming"][settings.OANDA_DOMAIN]
@@ -44,16 +45,3 @@ stream_api = SingletonAPIContext(hostname=OANDA_STREAM_DOMAIN,
                                  application=settings.APPLICATION_NAME,
                                  token=settings.OANDA_ACCESS_TOKEN)
 
-
-class OANDABase(object):
-    api = None
-    stream_api = None
-    account_id = None
-
-    _instruments = {}
-    order_states = {}
-    positions = {}
-    transactions = []
-    trades = {}
-    orders = {}
-    details = None

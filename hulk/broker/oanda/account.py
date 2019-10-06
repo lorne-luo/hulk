@@ -1,23 +1,24 @@
 import logging
 from decimal import Decimal
 
-import broker.oanda.common.view as common_view
-from broker.base import BrokerAccount
-from broker.oanda.base import SingletonAPIContext
-from broker.oanda.common.constants import OANDA_ENVIRONMENTS
-from broker.oanda.common.convertor import get_symbol
-from broker.oanda.common.logger import log_error
-from broker.oanda.common.prints import print_positions_map, print_orders_map, print_trades_map
-from broker.oanda.instrument import InstrumentMixin
-from broker.oanda.order import OrderMixin
-from broker.oanda.position import PositionMixin
-from broker.oanda.price import PriceMixin
-from broker.oanda.trade import TradeMixin
+from .common import view as common_view
+
+from ...base.models import AccountBase
+from .base import SingletonAPIContext
+from .common.constants import OANDA_ENVIRONMENTS
+from .common.convertor import get_symbol
+from .common.logger import log_error
+from .common.prints import print_positions_map, print_orders_map, print_trades_map
+from .instrument import InstrumentMixin
+from .order import OrderMixin
+from .position import PositionMixin
+from .price import PriceMixin
+from .trade import TradeMixin
 
 logger = logging.getLogger(__name__)
 
 
-class OANDA(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, BrokerAccount):
+class OANDA(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, AccountBase):
     """
     An Account object is a wrapper for the Account entities fetched from the
     v20 REST API. It is used for caching and updating Account state.
@@ -135,7 +136,7 @@ class OANDA(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, 
         Update the Account state with a set of changes provided by the server.
 
         Args:
-            changes: a v20.account.AccountChanges object representing the 
+            changes: a v20.account.AccountChanges object representing the
                      changes that have been made to the Account
         """
 
@@ -238,7 +239,7 @@ class OANDA(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, 
 
     def apply_state(self, state):
         """
-        Update the state of an Account 
+        Update the state of an Account
 
         Args:
             state: A v20.account.AccountState object representing changes to
