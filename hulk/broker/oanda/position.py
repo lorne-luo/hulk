@@ -7,7 +7,7 @@ from .common.logger import log_error
 logger = logging.getLogger(__name__)
 
 
-class PositionMixin( PositionBase):
+class OANDAPositionMixin(PositionBase):
 
     def pull_position(self, instrument):
         """pull position by instrument"""

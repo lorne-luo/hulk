@@ -5,7 +5,7 @@ from ...base.models import InstrumentBase
 logger = logging.getLogger(__name__)
 
 
-class InstrumentMixin(InstrumentBase):
+class OANDAInstrumentMixin(InstrumentBase):
     @property
     def instruments(self):
         if self._instruments:

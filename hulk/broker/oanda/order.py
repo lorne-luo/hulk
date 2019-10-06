@@ -19,7 +19,7 @@ from ...base.models import OrderBase
 logger = logging.getLogger(__name__)
 
 
-class OrderMixin(OrderBase):
+class OANDAOrderMixin(OrderBase):
 
     # order list
     def _process_orders(self, response):

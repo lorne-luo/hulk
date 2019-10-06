@@ -14,7 +14,7 @@ from ...base.models import TradeBase
 logger = logging.getLogger(__name__)
 
 
-class TradeMixin(TradeBase):
+class OANDATradeMixin(TradeBase):
 
     # list
     def _process_trades(self, response):

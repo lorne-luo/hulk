@@ -13,7 +13,7 @@ from ...base.models import PriceBase
 logger = logging.getLogger(__name__)
 
 
-class PriceMixin(PriceBase):
+class OANDAPriceMixin(PriceBase):
     _prices = {}
 
     def _process_price(self, price):
