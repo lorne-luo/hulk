@@ -43,3 +43,4 @@ output/
 # virtualenv
 env/
 venv/
+.env
