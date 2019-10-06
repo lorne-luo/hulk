@@ -5,7 +5,7 @@ from ...base.models import InstrumentBase
 logger = logging.getLogger(__name__)
 
 
-class InstrumentMixin(InstrumentBase):
+class FXCMInstrumentMixin(InstrumentBase):
     _instruments = {}
 
     @property

@@ -9,7 +9,7 @@ from ...utils.string import format_dict
 logger = logging.getLogger(__name__)
 
 
-class OrderMixin(OrderBase):
+class FXCMOrderMixin(OrderBase):
 
     def list_order(self, ids=None, state=None, instrument=None, count=100, beforeID=None):
         return self.fxcmpy.get_orders('list')

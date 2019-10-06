@@ -4,11 +4,11 @@ from decimal import Decimal
 from fxcmpy import fxcmpy
 
 from .constants import get_fxcm_symbol
-from .instrument import InstrumentMixin
-from .order import OrderMixin
-from .position import PositionMixin
-from .price import PriceMixin
-from .trade import TradeMixin
+from .instrument import FXCMInstrumentMixin
+from .order import FXCMOrderMixin
+from .position import FXCMPositionMixin
+from .price import FXCMPriceMixin
+from .trade import FXCMTradeMixin
 from ...base.common import units_to_lots, pip
 from ...base.models import AccountBase
 from ...base.constants import AccountType
@@ -17,7 +17,7 @@ from ...utils.string import format_dict
 logger = logging.getLogger(__name__)
 
 
-class FXCM(PositionMixin, OrderMixin, TradeMixin, InstrumentMixin, PriceMixin, AccountBase):
+class FXCM(FXCMPositionMixin, FXCMOrderMixin, FXCMTradeMixin, FXCMInstrumentMixin, FXCMPriceMixin, AccountBase):
     broker = 'FXCM'
     max_prices = 2000
     pairs = AccountBase.default_pairs

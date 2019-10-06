@@ -7,7 +7,7 @@ from ...base.models import TradeBase
 logger = logging.getLogger(__name__)
 
 
-class TradeMixin(TradeBase):
+class FXCMTradeMixin(TradeBase):
 
     def list_trade(self, ids=None, state=None, instrument=None, count=20, beforeID=None):
         return self.fxcmpy.get_all_trade_ids()

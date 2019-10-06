@@ -12,7 +12,7 @@ from ...utils.redis import get_tick_price
 logger = logging.getLogger(__name__)
 
 
-class PriceMixin(PriceBase):
+class FXCMPriceMixin(PriceBase):
     _prices = {}
 
     # list

@@ -6,7 +6,7 @@ from .constants import get_fxcm_symbol
 logger = logging.getLogger(__name__)
 
 
-class PositionMixin(PositionBase):
+class FXCMPositionMixin(PositionBase):
     positions = {}
 
     @property
