@@ -3,6 +3,11 @@ from __future__ import print_function
 import getpass
 import sys
 
+try:
+    input_func = raw_input  # python 2
+except NameError:
+    input_func = input  # python 3
+
 
 def get_string(prompt, default=None):
     prompt = "{}{}: ".format(
@@ -10,14 +15,11 @@ def get_string(prompt, default=None):
         "" if default is None else " [{}]".format(default)
     )
 
-    try: i = raw_input
-    except NameError: i = input
-
     value = None
 
     while value is None or len(value) == 0:
         try:
-            value = i(prompt) or default
+            value = input_func(prompt) or default
         except KeyboardInterrupt:
             print("")
             sys.exit()
@@ -61,12 +63,9 @@ def get_yn(prompt, default=True):
         choices
     )
 
-    try: i = raw_input
-    except NameError: i = input
-
     while choice is None:
         try:
-            s = i(prompt)
+            s = input_func(prompt)
 
             if len(s) == 0 and default is not None:
                 return default
@@ -106,16 +105,13 @@ def get_from_list(choices, title, prompt, default=0):
     for i, c in enumerate(choices):
         print("[{}] {}".format(i, c))
 
-    try: i = raw_input
-    except NameError: i = input
-
     while choice is None:
         try:
-            s = i(prompt) or default
+            s = input_func(prompt) or default
 
             i = int(s)
 
-            if i >= 0 and i < len(choices):
+            if 0 <= i < len(choices):
                 choice = choices[i]
         except KeyboardInterrupt:
             print("")
