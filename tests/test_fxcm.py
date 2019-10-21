@@ -1,19 +1,18 @@
 import unittest
 
-import settings
-from hulk.broker import SingletonFXCM
-from broker.base import AccountType
-from mt4.constants import OrderSide
+from hulk.base import AccountType, OrderSide
+from hulk.broker.fxcm.account import FXCM
+from . import test_config
 
 
-class TestAccount(unittest.TestCase):
+class FXCMTestAccount(unittest.TestCase):
     account = None
     currency = 'EUR_USD'
 
     def setUp(self):
-        self.account = SingletonFXCM(type=AccountType.DEMO,
-                                     account_id=settings.FXCM_ACCOUNT_ID,
-                                     access_token=settings.FXCM_ACCESS_TOKEN)
+        self.account = FXCM(type=AccountType.DEMO,
+                                     account_id=test_config.FXCM_ACCOUNT_ID,
+                                     access_token=test_config.FXCM_ACCESS_TOKEN)
 
     def test_instrument(self):
         pass

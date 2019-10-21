@@ -6,23 +6,21 @@ from dateutil.relativedelta import relativedelta
 from pandas import DataFrame
 from v20.transaction import LimitOrderTransaction, OrderCancelTransaction, StopOrderTransaction
 
-import settings
-from broker import SingletonOANDA
-from broker.oanda.common.convertor import units_to_lots
-from broker.oanda.common.prints import print_positions
-from mt4.constants import OrderSide, PERIOD_M5, pip, calculate_price
-from portfolio.portfolio import OandaV20Portfolio
+from hulk.base import OrderSide, PERIOD_M5, pip, calculate_price
+from hulk.broker.oanda.account import OANDA
+from hulk.broker.oanda.common.prints import print_positions
+from . import test_config
 
 
-class TestAccount(unittest.TestCase):
+class OANDATestAccount(unittest.TestCase):
     account = None
     currency = 'EUR_USD'
 
     def setUp(self):
-        self.account = SingletonOANDA(type='DEMO',
-                                      account_id=settings.ACCOUNT_ID,
-                                      access_token=settings.ACCESS_TOKEN,
-                                      application_name=settings.APPLICATION_NAME)
+        self.account = OANDA(type='DEMO',
+                             account_id=test_config.OANDA_ACCOUNT_ID,
+                             access_token=test_config.OANDA_ACCESS_TOKEN,
+                             application_name='test app')
 
     def test_instrument(self):
         # list_instruments
@@ -134,13 +132,3 @@ class TestAccount(unittest.TestCase):
         transaction = self.account.cancel_order(transactions[0].id)
         self.assertTrue(isinstance(transaction, OrderCancelTransaction))
         self.assertTrue(transaction.id not in self.account.orders)
-
-
-class TestPortifolio(unittest.TestCase):
-
-    def test_oanda_portifolio(self):
-        profile = OandaV20Portfolio('practice', settings.OANDA_ACCESS_TOKEN, settings.OANDA_ACCOUNT_ID, None)
-        units = profile.trade_units('EURUSD', 30)
-        print(units_to_lots(units))
-        units = profile.trade_units('USDJPY', 30)
-        print(units_to_lots(units))
