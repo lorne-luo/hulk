@@ -1,7 +1,7 @@
 import logging
 from decimal import Decimal
 
-import settings
+from ... import config
 from v20.transaction import (StopLossDetails, ClientExtensions, TakeProfitDetails, TrailingStopLossDetails,
                              LimitOrderTransaction, StopOrderTransaction)
 
@@ -35,7 +35,7 @@ class OANDAOrderMixin(OrderBase):
         for order in orders:
             self.orders[order.id] = order
 
-        if settings.DEBUG:
+        if config.DEBUG:
             print_orders(orders)
         return orders
 
@@ -171,7 +171,7 @@ class OANDAOrderMixin(OrderBase):
         if trade_ids or order_ids:
             self.pull()
 
-        if settings.DEBUG:
+        if config.DEBUG:
             for t in transactions:
                 print_entity(t, title=t.__class__.__name__)
                 print('')
@@ -186,7 +186,7 @@ class OANDAOrderMixin(OrderBase):
         order = response.get("order", "200")
         self.orders[order.id] = order
 
-        if settings.DEBUG:
+        if config.DEBUG:
             print_orders([order])
         return order
 
@@ -368,12 +368,12 @@ class OANDAOrderMixin(OrderBase):
 
         if response.status < 200 or response.status > 299:
             transaction = response.get('orderCancelRejectTransaction', "404")
-            if settings.DEBUG:
+            if config.DEBUG:
                 print_entity(transaction, title='Order Cancel Reject')
             raise Exception('orderCancelRejectTransaction')
 
         transaction = response.get('orderCancelTransaction', "200")
-        if settings.DEBUG:
+        if config.DEBUG:
             print_entity(transaction, title='Order Canceled')
 
         order_id = transaction.orderID

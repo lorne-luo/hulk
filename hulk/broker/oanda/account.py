@@ -1,6 +1,8 @@
 import logging
 from decimal import Decimal
 
+import v20
+
 from .common import view as common_view
 
 from ...base.models import AccountBase
@@ -32,8 +34,8 @@ class OANDA(OANDAPositionMixin, OANDAOrderMixin, OANDATradeMixin, OANDAInstrumen
         self.type = type
         hostname = OANDA_ENVIRONMENTS["api"][type]
         stream_hostname = OANDA_ENVIRONMENTS["streaming"][type]
-        self.api = SingletonAPIContext(hostname=hostname, token=access_token, application=application_name)
-        self.stream_api = SingletonAPIContext(hostname=stream_hostname, token=access_token,
+        self.api = v20.Context(hostname=hostname, token=access_token, application=application_name)
+        self.stream_api = v20.Context(hostname=stream_hostname, token=access_token,
                                               application=application_name)
 
     def __init__(self, type, account_id, access_token, application_name=None, transaction_cache_depth=100,
@@ -43,10 +45,10 @@ class OANDA(OANDAPositionMixin, OANDAOrderMixin, OANDATradeMixin, OANDAInstrumen
         Args:
             account: a v20.account.Account fetched from the server
         """
+        super(OANDA, self).__init__(*args, **kwargs)
         self.account_id = account_id
         self.access_token = access_token
         self.setup_api(type, access_token, application_name)
-        super(OANDA, self).__init__(*args, **kwargs)
 
         #
         # The collection of Trades open in the Account

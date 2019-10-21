@@ -9,8 +9,6 @@ class AccountBase(object):
 
     def __init__(self, *args, **kwargs):
         self.broker = self.broker or self.__class__.__name__
-        self.name = self.id
-        self.broker = ''
         self.type = AccountType.DEMO
         self.name = ''
         self.account_id = ''

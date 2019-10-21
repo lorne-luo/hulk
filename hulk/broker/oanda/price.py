@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import dateparser
 import pandas as pd
-import settings
+from ... import config
 
 from .common.convertor import get_symbol, get_timeframe_granularity
 from .common.view import price_to_string, heartbeat_to_string
@@ -36,7 +36,7 @@ class OANDAPriceMixin(PriceBase):
 
         prices = response.get("prices", 200)
         for price in prices:
-            if settings.DEBUG:
+            if config.DEBUG:
                 print(price_to_string(price))
             self._process_price(price)
 
@@ -108,7 +108,7 @@ class OANDAPriceMixin(PriceBase):
         )
 
         for msg_type, msg in response.parts():
-            if msg_type == "pricing.PricingHeartbeat" and settings.DEBUG:
+            if msg_type == "pricing.PricingHeartbeat" and config.DEBUG:
                 print(msg_type, heartbeat_to_string(msg))
             elif msg_type == "pricing.ClientPrice" and msg.type == 'PRICE':
                 self._process_price(msg)

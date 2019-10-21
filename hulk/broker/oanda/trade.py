@@ -1,6 +1,6 @@
 import logging
 
-import settings
+from ... import config
 
 from .base import api
 from ...base.constants import TransactionName
@@ -27,7 +27,7 @@ class OANDATradeMixin(TradeBase):
         for trade in trades:
             self.trades[trade.id] = trade
 
-        if settings.DEBUG:
+        if config.DEBUG:
             print_trades(trades)
         return trades
 
@@ -60,7 +60,7 @@ class OANDATradeMixin(TradeBase):
         trade = response.get("trade", "200")
         self.trades[trade.id] = trade
 
-        if settings.DEBUG:
+        if config.DEBUG:
             print_trades([trade])
         return trade
 
@@ -104,7 +104,7 @@ class OANDATradeMixin(TradeBase):
         if trade_ids:
             self.pull()
 
-        if settings.DEBUG:
+        if config.DEBUG:
             for t in transactions:
                 print_entity(t, title=t.__class__.__name__)
                 print('')
