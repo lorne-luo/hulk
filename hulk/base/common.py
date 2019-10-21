@@ -60,16 +60,16 @@ def profit_pip(symbol, open, close, side, abs=False):
     return pip(symbol, profit)
 
 
-def calculate_price(base_price, side, pip, instrument):
+def calculate_price(base_price, side, pips, instrument):
     instrument = get_mt4_symbol(instrument)
     pip_unit = pip(instrument)
     base_price = Decimal(str(base_price))
-    pip = Decimal(str(pip))
+    pips = Decimal(str(pips))
 
     if side == OrderSide.BUY:
-        return base_price + pip * pip_unit
+        return base_price + pips * pip_unit
     elif side == OrderSide.SELL:
-        return base_price - pip * pip_unit
+        return base_price - pips * pip_unit
 
 
 def get_candle_time(time, timeframe):
