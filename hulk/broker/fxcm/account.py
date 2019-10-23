@@ -20,14 +20,15 @@ logger = logging.getLogger(__name__)
 class FXCM(FXCMPositionMixin, FXCMOrderMixin, FXCMTradeMixin, FXCMInstrumentMixin, FXCMPriceMixin, AccountBase):
     broker = 'FXCM'
     max_prices = 2000
-    pairs = AccountBase.default_pairs
     MAX_CANDLES = 10000
 
     def __init__(self, type, account_id, access_token, *args, **kwargs):
+        super(FXCM, self).__init__(*args, **kwargs)
         self.type = 'real' if type == AccountType.REAL else 'demo'
         self.account_id = int(account_id)
         self.access_token = access_token
-        super(FXCM, self).__init__(*args, **kwargs)
+        self.pairs = self.default_pairs
+
         server = 'real' if type == AccountType.REAL else 'demo'
 
         if not access_token:
@@ -99,6 +100,9 @@ class FXCM(FXCMPositionMixin, FXCMOrderMixin, FXCMTradeMixin, FXCMInstrumentMixi
         content = format_dict(self.summary)
 
         logger.info(content)
+
+    def disconnect(self):
+        self.fxcmpy.close()
 
 # if __name__ == '__main__':
 #    from broker.fxcm.account import *
