@@ -179,10 +179,10 @@ class FXCMOrderMixin(OrderBase):
 
         if trade_id in self.open_order_ids():
             self.fxcmpy.change_order_stop_limit(trade_id, limit=price, is_limit_in_pips=is_in_pips)
-        elif trade_id in self.open_trade_ids():
+        elif trade_id in self.open_order_ids():
             self.fxcmpy.change_trade_stop_limit(trade_id, False, price, is_in_pips=is_in_pips)
 
-    def stop_loss(self, trade_id, stop_loss_pip=None, price=None, order_id=None, client_trade_id=None,
+    def stop_loss(self, trade_id, price, order_id=None, client_trade_id=None,
                   timeInForce=TimeInForce.GTC, gtd_time=None,
                   trigger_condition=OrderTriggerCondition.DEFAULT,
                   guaranteed=None,
@@ -195,7 +195,7 @@ class FXCMOrderMixin(OrderBase):
 
         if trade_id in self.open_order_ids():
             self.fxcmpy.change_order_stop_limit(trade_id, stop=price, is_stop_in_pips=is_in_pips)
-        elif trade_id in self.open_trade_ids():
+        elif trade_id in self.open_order_ids():
             self.fxcmpy.change_trade_stop_limit(trade_id, True, price, is_in_pips=is_in_pips)
 
     def trailing_stop_loss(self, trade_id, stop_loss_pip=None, order_id=None, client_trade_id=None,
@@ -209,7 +209,7 @@ class FXCMOrderMixin(OrderBase):
         # @fixme
         if trade_id in self.open_order_ids():
             pass
-        elif trade_id in self.open_trade_ids():
+        elif trade_id in self.open_order_ids():
             self.fxcmpy.change_trade_stop_limit(trade_id, is_in_pips=is_in_pips, trailing_step=stop_loss_pip)
 
     # cancel & extensions

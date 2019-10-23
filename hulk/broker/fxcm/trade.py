@@ -13,6 +13,9 @@ class FXCMTradeMixin(TradeBase):
         return self.fxcmpy.get_all_trade_ids()
 
     def list_open_trade(self):
+        """
+        {71893954: <fxcmpy.fxcmpy_open_position.fxcmpy_open_position object at 0x11a85cba8>}
+        """
         return self.fxcmpy.open_pos
 
     def get_trades(self):
