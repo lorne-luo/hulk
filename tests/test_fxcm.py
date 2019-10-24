@@ -7,6 +7,14 @@ from . import test_config
 
 
 class FXCMTestAccount(unittest.TestCase):
+    """
+from tests import test_config
+from hulk.base import AccountType, OrderSide
+from hulk.broker.fxcm.account import FXCM
+account = FXCM(type=AccountType.DEMO,
+                account_id=test_config.FXCM_ACCOUNT_ID,
+                access_token=test_config.FXCM_ACCESS_TOKEN)
+    """
     account = None
     currency = 'EUR_USD'
 

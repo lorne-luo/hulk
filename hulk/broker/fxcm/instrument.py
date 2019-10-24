@@ -13,7 +13,8 @@ class FXCMInstrumentMixin(InstrumentBase):
         if self._instruments:
             return self._instruments
         else:
-            return self.fxcmpy.get_instruments()
+            self._instruments = self.fxcmpy.get_instruments()
+            return self._instruments
 
     def list_instruments(self):
         """get all avaliable instruments"""
