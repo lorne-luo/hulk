@@ -1,7 +1,9 @@
 import unittest
+from datetime import datetime
+from decimal import Decimal
 from time import sleep
 
-from hulk.base import AccountType, OrderSide
+from hulk.base import AccountType, OrderSide, get_mt4_symbol, pip
 from hulk.broker.fxcm.account import FXCM
 from . import test_config
 
@@ -70,3 +72,18 @@ account = FXCM(type=AccountType.DEMO,
 
         self.account.close_all_position()
         self.assertEqual(len(self.account.open_order_ids()), 0)
+
+    def tick_data(self, data, dataframe):
+        instrument = get_mt4_symbol(data['Symbol'])
+        time = datetime.utcfromtimestamp(int(data['Updated']) / 1000.0)
+
+        bid = Decimal(str(data['Rates'][0])).quantize(pip(instrument))
+        ask = Decimal(str(data['Rates'][1])).quantize(pip(instrument))
+        print(instrument, time, bid, ask)
+
+    def test_streaming(self):
+        self.account.fxcmpy.set_max_prices(4000)
+        pairs = ['EURUSD', 'GBPUSD', 'USDJPY', 'USDCHF', 'AUDUSD', 'NZDUSD', 'USDCNH', 'XAUUSD']
+        for pair in pairs:
+            self.account.fxcmpy.subscribe_market_data(pair, (self.tick_data,))
+            self.account.fxcmpy.subscribe_instrument(pair)
