@@ -3,10 +3,10 @@ from decimal import Decimal
 
 import dateparser
 import pandas as pd
-from ... import config
 
 from .common.convertor import get_symbol, get_timeframe_granularity
 from .common.view import price_to_string, heartbeat_to_string
+from ... import config
 from ...base.common import pip
 from ...base.models import PriceBase
 
@@ -58,16 +58,25 @@ class OANDAPriceMixin(PriceBase):
         elif type == 'ask':
             return price['ask']
 
-    def get_candle(self, instrument, granularity, count=120, fromTime=None, toTime=None, price_type='M', smooth=False):
+    def get_candle(self, instrument, granularity, count=None, fromTime=None, toTime=None, price_type='M', smooth=False):
         instrument = get_symbol(instrument)
         granularity = get_timeframe_granularity(granularity)
         if isinstance(fromTime, str):
             fromTime = dateparser.parse(fromTime).strftime('%Y-%m-%dT%H:%M:%S')
-        if isinstance(toTime, str):
-            fromTime = dateparser.parse(toTime).strftime('%Y-%m-%dT%H:%M:%S')
+        elif fromTime:
+            fromTime = fromTime.strftime('%Y-%m-%dT%H:%M:%S')
 
-        response = self.api.instrument.candles(instrument, granularity=granularity, count=count, fromTime=fromTime,
-                                               toTime=toTime, price=price_type, smooth=smooth)
+        if isinstance(toTime, str):
+            toTime = dateparser.parse(toTime).strftime('%Y-%m-%dT%H:%M:%S')
+        elif toTime:
+            toTime = toTime.strftime('%Y-%m-%dT%H:%M:%S')
+
+        if toTime:
+            response = self.api.instrument.candles(instrument, granularity=granularity, fromTime=fromTime,
+                                                   toTime=toTime, price=price_type, smooth=smooth)
+        else:
+            response = self.api.instrument.candles(instrument, granularity=granularity, count=count, fromTime=fromTime,
+                                                   price=price_type, smooth=smooth)
 
         if response.status != 200:
             logger.error('[GET_Candle]', response, response.body)
