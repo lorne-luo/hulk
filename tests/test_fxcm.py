@@ -19,6 +19,7 @@ account = FXCM(type=AccountType.DEMO,
     """
     account = None
     currency = 'EUR_USD'
+    tick_price = None
 
     def setUp(self):
         self.account = FXCM(type=AccountType.DEMO,
@@ -35,7 +36,7 @@ account = FXCM(type=AccountType.DEMO,
         position_count = len(self.account.open_positions)
         trade_count = len(self.account.list_open_trade())
         # market order
-        order = self.account.market_order('EUR/USD', OrderSide.BUY, 0.01, take_profit=30, stop_loss=-30)
+        order = self.account.market_order('EUR/USD', OrderSide.BUY, 0.1, take_profit=30, stop_loss=-30)
         self.assertTrue(order)
         self.assertEqual(len(self.account.open_positions), 1 + position_count)
         self.assertEqual(len(self.account.list_open_trade()), 1 + trade_count)
@@ -47,11 +48,11 @@ account = FXCM(type=AccountType.DEMO,
         self.account.take_profit(trade_id, 40, is_in_pips=True)
         self.account.stop_loss(trade_id, -40, is_in_pips=True)
 
-        self.account.close_trade(trade_id, 0.005)
+        self.account.close_trade(trade_id, 0.05)
         self.assertTrue(len(self.account.list_open_trade()) == 1 + trade_count)
         trade_id = self.account.open_trade_ids()[0]
         self.account.close_trade(trade_id)
-        sleep(5)
+        sleep(10)
         self.assertEqual(len(self.account.list_open_trade()), trade_count)
         self.assertEqual(len(self.account.open_positions), position_count)
 
@@ -73,17 +74,21 @@ account = FXCM(type=AccountType.DEMO,
         self.account.close_all_position()
         self.assertEqual(len(self.account.open_order_ids()), 0)
 
-    def tick_data(self, data, dataframe):
+    def process_tick(self, data, dataframe):
         instrument = get_mt4_symbol(data['Symbol'])
         time = datetime.utcfromtimestamp(int(data['Updated']) / 1000.0)
 
         bid = Decimal(str(data['Rates'][0])).quantize(pip(instrument))
         ask = Decimal(str(data['Rates'][1])).quantize(pip(instrument))
+        self.tick_price = data
         print(instrument, time, bid, ask)
 
     def test_streaming(self):
         self.account.fxcmpy.set_max_prices(4000)
-        pairs = ['EURUSD', 'GBPUSD', 'USDJPY', 'USDCHF', 'AUDUSD', 'NZDUSD', 'USDCNH', 'XAUUSD']
+        pairs = ['EUR/USD', 'GBP/USD']
         for pair in pairs:
-            self.account.fxcmpy.subscribe_market_data(pair, (self.tick_data,))
+            self.account.fxcmpy.subscribe_market_data(pair, (self.process_tick,))
             self.account.fxcmpy.subscribe_instrument(pair)
+
+        sleep(15)
+        self.assertTrue(self.tick_price)
