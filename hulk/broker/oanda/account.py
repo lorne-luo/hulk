@@ -28,7 +28,7 @@ class OANDA(OANDAPositionMixin, OANDAOrderMixin, OANDATradeMixin, OANDAInstrumen
     broker = 'OANDA'
 
     # all_currencies=['name', 'type', 'displayName', 'pipLocation', 'displayPrecision', 'tradeUnitsPrecision', 'minimumTradeSize', 'maximumTrailingStopDistance', 'minimumTrailingStopDistance', 'maximumPositionSize', 'maximumOrderUnits', 'marginRate', 'commission']
-    default_pairs = ['EUR_USD', 'GBP_USD', 'USD_JPY', 'USD_CHF', 'AUD_USD', 'NZD_USD', 'USD_CNH', 'XAU_USD']
+    default_pairs = ['EUR_USD', 'GBP_USD', 'USD_JPY', 'USD_CHF', 'AUD_USD', 'NZD_USD']
 
     def setup_api(self, type, access_token, application_name):
         self.type = type
@@ -49,6 +49,7 @@ class OANDA(OANDAPositionMixin, OANDAOrderMixin, OANDATradeMixin, OANDAInstrumen
         self.account_id = account_id
         self.access_token = access_token
         self.setup_api(type, access_token, application_name)
+        self.default_pairs = ['EUR_USD', 'GBP_USD', 'USD_JPY', 'USD_CHF', 'AUD_USD', 'NZD_USD']
 
         #
         # The collection of Trades open in the Account

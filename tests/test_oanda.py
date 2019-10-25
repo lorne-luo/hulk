@@ -13,6 +13,20 @@ from . import test_config
 
 
 class OANDATestAccount(unittest.TestCase):
+    """
+from tests import test_config
+from hulk.base import AccountType, OrderSide
+from hulk.broker.fxcm.account import FXCM
+from hulk.broker.oanda.account import OANDA
+from hulk.base import OrderSide, PERIOD_M5, pip, calculate_price
+from decimal import Decimal
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+account = OANDA(type='DEMO',
+         account_id=test_config.OANDA_ACCOUNT_ID,
+         access_token=test_config.OANDA_ACCESS_TOKEN,
+         application_name='test app')
+    """
     account = None
     currency = 'EUR_USD'
 
@@ -39,14 +53,14 @@ class OANDATestAccount(unittest.TestCase):
         self.assertEqual(price, Decimal('1.11639'))
 
         # get_candle
-        from_time = datetime.utcnow()
-        to_time = from_time - relativedelta(minutes=101)
-        count = 20
+        minutes = 101
+        to_time = datetime.utcnow() - relativedelta(hours=24)
+        from_time = to_time - relativedelta(minutes=minutes)
+        count = int(minutes / PERIOD_M5)
 
         # get_candle
-        candles = self.account.get_candle(self.currency, PERIOD_M5, count=count, fromTime=to_time, toTime=to_time)
+        candles = self.account.get_candle(self.currency, PERIOD_M5, fromTime=from_time, toTime=to_time)
         self.assertTrue(isinstance(candles, DataFrame))
-        self.assertEqual(len(candles), count)
 
     def test_position(self):
         # pull_position
@@ -69,7 +83,7 @@ class OANDATestAccount(unittest.TestCase):
         self.account.close_all_position()
 
     def test_market_order(self):
-        self.account.list_prices()
+        self.account.list_prices(['EUR_USD', 'GBP_USD', ])
         self.assertTrue(len(self.account._prices))
         ask = self.account._prices.get(self.currency).get('ask')
         tp_price = calculate_price(ask, OrderSide.BUY, 31.4, self.currency)
@@ -103,7 +117,7 @@ class OANDATestAccount(unittest.TestCase):
         transactions = self.account.take_profit(trade_id, order_id=trade.takeProfitOrder.id, price='1.44444')
         self.assertTrue(transactions)
 
-        transactions = self.account.trailing_stop_loss(trade_id=trade_id, stop_loss_pip=40.1)
+        transactions = self.account.trailing_stop_loss(trade_id=trade_id, pips=40.1)
         self.assertTrue(transactions)
 
         transactions = self.account.close(trade_id, lots=0.04)
