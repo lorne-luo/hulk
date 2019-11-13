@@ -1,7 +1,8 @@
 import logging
 from decimal import Decimal
 
-from falcon.base.order import lots_to_units
+from falcon.base.order import (lots_to_units, OrderSide, OrderType, OrderPositionFill, TimeInForce,
+                               OrderTriggerCondition, OrderState)
 from falcon.base.price import pip
 from v20.transaction import (StopLossDetails, ClientExtensions, TakeProfitDetails, TrailingStopLossDetails,
                              LimitOrderTransaction, StopOrderTransaction)
@@ -12,9 +13,7 @@ from .common.logger import log_error
 from .common.prints import print_orders
 from .common.view import print_entity
 from ... import config
-from ...base.constants import OrderSide
-from ...base.constants import (TransactionName, OrderType, OrderPositionFill, TimeInForce,
-                               OrderTriggerCondition, OrderState)
+from ...base.constants import TransactionName
 from ...base.models import OrderBase
 
 logger = logging.getLogger(__name__)

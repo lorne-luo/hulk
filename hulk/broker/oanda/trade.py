@@ -1,16 +1,15 @@
 import logging
 
-from falcon.base.order import lots_to_units
+from falcon.base.order import lots_to_units, OrderSide
 
 from ... import config
+from ...base.constants import TransactionName
+from ...base.models import TradeBase
 
 from .base import api
-from ...base.constants import TransactionName
 from .common.logger import log_error
 from .common.prints import print_trades
 from .common.view import print_entity
-from ...base.constants import OrderSide
-from ...base.models import TradeBase
 
 logger = logging.getLogger(__name__)
 

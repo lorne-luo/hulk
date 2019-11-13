@@ -4,9 +4,6 @@ from decimal import Decimal
 import v20
 
 from .common import view as common_view
-
-from ...base.models import AccountBase
-from .base import SingletonAPIContext
 from .common.constants import OANDA_ENVIRONMENTS
 from .common.convertor import get_symbol
 from .common.logger import log_error
@@ -16,6 +13,7 @@ from .order import OANDAOrderMixin
 from .position import OANDAPositionMixin
 from .price import OANDAPriceMixin
 from .trade import OANDATradeMixin
+from ...base.models import AccountBase
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +34,7 @@ class OANDA(OANDAPositionMixin, OANDAOrderMixin, OANDATradeMixin, OANDAInstrumen
         stream_hostname = OANDA_ENVIRONMENTS["streaming"][type]
         self.api = v20.Context(hostname=hostname, token=access_token, application=application_name)
         self.stream_api = v20.Context(hostname=stream_hostname, token=access_token,
-                                              application=application_name)
+                                      application=application_name)
 
     def __init__(self, type, account_id, access_token, application_name=None, transaction_cache_depth=100,
                  *args, **kwargs):
@@ -257,7 +255,7 @@ class OANDA(OANDAPositionMixin, OANDAOrderMixin, OANDATradeMixin, OANDAInstrumen
             Set dest[name] to value if it exists and is not None
             """
             if hasattr(dest, name) and \
-                    getattr(dest, name) is not None:
+                getattr(dest, name) is not None:
                 setattr(dest, name, value)
 
         for field in state.fields():

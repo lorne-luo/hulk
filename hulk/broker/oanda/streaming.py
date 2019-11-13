@@ -3,10 +3,10 @@ from queue import Queue
 
 import dateparser
 from event.runner import StreamRunnerBase
+from falcon.base.account import AccountType
 
 from .account import OANDA
 from .common.convertor import get_symbol
-from ...base.constants import AccountType
 from ...utils.singleton import SingletonDecorator
 
 logger = logging.getLogger(__name__)

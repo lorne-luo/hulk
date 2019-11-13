@@ -8,7 +8,9 @@ import settings
 from event.event import TickPriceEvent, HeartBeatEvent, StartUpEvent, ConnectEvent, TradeCloseEvent, \
     MarketEvent, MarketAction
 from event.runner import StreamRunnerBase
+from falcon.base.account import AccountType
 from falcon.base.market import is_market_open
+from falcon.base.order import OrderSide
 from falcon.base.price import pip
 from falcon.base.symbol import get_mt4_symbol
 from fxcmpy import fxcmpy, fxcmpy_closed_position
@@ -16,7 +18,6 @@ from fxcmpy.fxcmpy import ServerError
 from utils import telegram as tg
 
 from .constants import get_fxcm_symbol
-from ...base.constants import AccountType, OrderSide
 
 from ...utils.redis import set_last_tick, set_tick_price
 

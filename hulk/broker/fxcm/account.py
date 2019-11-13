@@ -1,6 +1,7 @@
 import logging
 from decimal import Decimal
 
+from falcon.base.account import AccountType
 from falcon.base.order import units_to_lots
 from falcon.base.price import pip
 from fxcmpy import fxcmpy
@@ -12,10 +13,10 @@ from .position import FXCMPositionMixin
 from .price import FXCMPriceMixin
 from .trade import FXCMTradeMixin
 from ...base.models import AccountBase
-from ...base.constants import AccountType
 from ...utils.string import format_dict
 
 logger = logging.getLogger(__name__)
+
 
 class FXCM(FXCMPositionMixin, FXCMOrderMixin, FXCMTradeMixin, FXCMInstrumentMixin, FXCMPriceMixin, AccountBase):
     broker = 'FXCM'
