@@ -1,7 +1,8 @@
 import logging
 
+from falcon.base.order import lots_to_units, OrderSide
+
 from .constants import get_fxcm_symbol
-from ...base.common import lots_to_units, OrderSide
 from ...base.models import TradeBase
 
 logger = logging.getLogger(__name__)

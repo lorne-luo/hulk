@@ -3,10 +3,12 @@ from datetime import datetime
 from decimal import Decimal
 from time import sleep
 
-from hulk.base import AccountType, OrderSide, get_mt4_symbol, pip
+from falcon.base.price import pip
+from falcon.base.symbol import get_mt4_symbol
+
+from hulk.base import AccountType, OrderSide
 from hulk.broker.fxcm.account import FXCM
 from . import test_config
-
 
 class FXCMTestAccount(unittest.TestCase):
     """

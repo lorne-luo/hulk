@@ -3,14 +3,14 @@ from decimal import Decimal
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
+from falcon.base.price import pip
+from falcon.base.timeframe import get_candle_time
 
 from .constants import get_fxcm_symbol, get_fxcm_timeframe
-from ...base.common import get_mt4_symbol, pip, get_candle_time
 from ...base.models import PriceBase
 # from ...utils.redis import get_tick_price
 
 logger = logging.getLogger(__name__)
-
 
 class FXCMPriceMixin(PriceBase):
     _prices = {}

@@ -2,8 +2,9 @@ from datetime import datetime
 from decimal import Decimal
 
 from dateparser import parse
+from falcon.base.symbol import get_mt4_symbol
 
-from hulk.base import OrderType, get_mt4_symbol
+from hulk.base import OrderType
 
 
 class SignalAction(object):

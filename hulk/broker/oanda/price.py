@@ -3,11 +3,11 @@ from decimal import Decimal
 
 import dateparser
 import pandas as pd
+from falcon.base.price import pip
 
 from .common.convertor import get_symbol, get_timeframe_granularity
 from .common.view import price_to_string, heartbeat_to_string
 from ... import config
-from ...base.common import pip
 from ...base.models import PriceBase
 
 logger = logging.getLogger(__name__)

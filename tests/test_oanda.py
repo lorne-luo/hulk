@@ -3,10 +3,11 @@ from datetime import datetime
 from decimal import Decimal
 
 from dateutil.relativedelta import relativedelta
+from falcon.base.price import pip, calculate_price
 from pandas import DataFrame
 from v20.transaction import LimitOrderTransaction, OrderCancelTransaction, StopOrderTransaction
 
-from hulk.base import OrderSide, PERIOD_M5, pip, calculate_price
+from hulk.base import OrderSide, PERIOD_M5
 from hulk.broker.oanda.account import OANDA
 from hulk.broker.oanda.common.prints import print_positions
 from . import test_config
@@ -18,7 +19,7 @@ from tests import test_config
 from hulk.base import AccountType, OrderSide
 from hulk.broker.fxcm.account import FXCM
 from hulk.broker.oanda.account import OANDA
-from hulk.base import OrderSide, PERIOD_M5, pip, calculate_price
+from hulk.base import OrderSide, PERIOD_M5
 from decimal import Decimal
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
