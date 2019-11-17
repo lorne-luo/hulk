@@ -1,4 +1,5 @@
-from .constants import OrderSide, AccountType
+from falcon.base.account import AccountType
+from falcon.base.order import OrderSide
 
 
 class AccountBase(object):
