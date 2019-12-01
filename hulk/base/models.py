@@ -9,7 +9,7 @@ class AccountBase(object):
         return '%s#%s#%s' % (self.broker, self.account_id, self.access_token)
 
     def __init__(self, *args, **kwargs):
-        self.broker = self.broker or self.__class__.__name__
+        self.broker = kwargs.get('broker') or self.__class__.__name__
         self.type = kwargs.get('type') or AccountType.DEMO
         self.name = ''
         self.account_id = ''
