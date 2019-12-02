@@ -105,6 +105,9 @@ class OrderBase(object):
     def cancel_order(self, order_id, **kwargs):
         raise NotImplementedError
 
+    def close_order(self, order_id, lots=None, percent=None, **kwargs):
+        raise NotImplementedError
+
 
 class TradeBase(object):
     def list_trade(self, ids=None, state=None, instrument=None, count=20, beforeID=None):
